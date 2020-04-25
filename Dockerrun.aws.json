@@ -1,0 +1,11 @@
+{
+    "AWSEBDockerrunVersion" : 2,
+    "containerDefinitions": [
+        {
+            "name" : "client",
+            "image": "docker_user/client_image",
+            "hostname" : "client",
+            "essentail": false
+        }
+    ]
+}
