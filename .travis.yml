@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  -docker build -t jainprashul/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true jainprashul/react-test npm test
+
+after_success:
+  - docker build -t jainprashul/multi-client ./client
+  - docker build -t jainprashul/multi-nginx ./nginx
+  - docker build -t jainprashul/multi-server ./server
+  - docker build -t jainprashul/multi-worker ./worker
+
+  #  login docker ub
+  - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
+  # upload to docker hub
+  - docker push jainprashul/multi-client
+  - docker push jainprashul/multi-nginx
+  - docker push jainprashul/multi-server
+  - docker push jainprashul/multi-worker
