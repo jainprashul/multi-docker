@@ -3,14 +3,14 @@ language: generic
 services:
   - docker
 
-before_install:
-  -docker build -t jainprashul/react-test -f "./client/Dockerfile.dev" "./client"
-  
+# before_install:
+#   -docker build -t jainprashul/react-test -f ./client/Dockerfile.dev ./client
+
+
+# script:
+#   - docker run -e CI=true jainprashul/react-test npm test
 
 script:
-  - docker run -e CI=true jainprashul/react-test npm test
-
-after_success:
   - docker build -t jainprashul/multi-client ./client
   - docker build -t jainprashul/multi-nginx ./nginx
   - docker build -t jainprashul/multi-server ./server
